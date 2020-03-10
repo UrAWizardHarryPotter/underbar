@@ -99,6 +99,23 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
+    let resultArr = []; // -> define resultArr and assign to empty array
+    let helperArr = []; // -> define helperArr and assign to empty array
+    if (isSorted) { // -> if isSorted is true
+      _.each(array, function(element) { //-> for each element in array called by the function...
+        if (_.indexOf(helperArr, iterator(element)) === -1) { // -> if index of iterator(element) of helperArr appears for the first time
+        helperArr.push(iterator(element)); // -> push the result of iterator(element) to helperArr
+        resultArr.push(element); // -> push the element to the resultArr
+        }
+      });
+    } else { // -> otherwise (if isSorted is false)
+      _.each(array, function(element) { //-> for each element in array called by the function...
+        if (_.indexOf(resultArr, element) === -1) { // -> if index of iterator(element) of resultArr appears for the first time
+          resultArr.push(element); // -> push the element to the resultArr
+        }
+      });
+    }
+    return resultArr;
   };
 
 
