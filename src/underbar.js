@@ -188,11 +188,11 @@
   _.contains = function(collection, target) {
     // TIP: Many iteration problems can be most easily expressed in
     // terms of reduce(). Here's a freebie to demonstrate!
-    return _.reduce(collection, function(wasFound, item) {
+    return _.reduce(collection, function(wasFound, element) {
       if (wasFound) {
         return true;
       }
-      return item === target;
+      return element === target;
     }, false);
   };
 
@@ -200,12 +200,31 @@
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    // Edge case of no iterator
+    if (iterator === undefined) {
+      iterator = _.identity;
+    }
+    // Edge case of empty array
+    if (collection.length === 0) {
+      return true;
+    }
+
+    return _.reduce(collection, function(test, element) {
+      if (test === false) {
+        return false;
+      }
+      return !!iterator(element);
+      }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+    if (iterator === undefined) {
+      iterator = _.identity;
+    }
+    return !_.every(collection, item => {return !iterator(item)});
   };
 
 
