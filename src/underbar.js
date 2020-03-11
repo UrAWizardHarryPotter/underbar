@@ -168,6 +168,9 @@
   //   }); // should be 5, regardless of the iterator function passed in
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
+    if (typeof(collection) === 'object') {
+      collection = Object.values(collection);
+    }
     if (accumulator === undefined) {
       accumulator = collection[0];
       for (let i = 1; i < collection.length; i++) {
